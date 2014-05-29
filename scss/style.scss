@@ -28,6 +28,11 @@ body {
 	}
 	color: $main-text;
 	background-color: $background;
+
+	&.overflow-hidden {
+		/* prevent 2 vertical scrollbars on ie and firefox when the cart is visible */ 
+		overflow: hidden;
+	}
 }
 
 a {

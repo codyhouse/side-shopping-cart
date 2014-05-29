@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 		//close cart panel (if it's open)
 		$lateral_cart.removeClass('speed-in');
-		toggle_panel_visibility($menu_navigation, $shadow_layer);
+		toggle_panel_visibility($menu_navigation, $shadow_layer, $('body'));
 	});
 
 	//open cart
@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 		//close lateral menu (if it's open)
 		$menu_navigation.removeClass('speed-in');
-		toggle_panel_visibility($lateral_cart, $shadow_layer);
+		toggle_panel_visibility($lateral_cart, $shadow_layer, $('body'));
 	});
 
 	//close lateral cart or lateral menu
@@ -28,6 +28,7 @@ jQuery(document).ready(function($){
 		$lateral_cart.removeClass('speed-in');
 		$menu_navigation.removeClass('speed-in');
 		$shadow_layer.removeClass('is-visible');
+		$('body').removeClass('overflow-hidden');
 	});
 
 	//move #main-navigation inside header on laptop
@@ -39,20 +40,21 @@ jQuery(document).ready(function($){
 		if( $(window).width() >= $L && $menu_navigation.hasClass('speed-in')) {
 			$menu_navigation.removeClass('speed-in');
 			$shadow_layer.removeClass('is-visible');
+			$('body').removeClass('overflow-hidden');
 		}
 
 	});
 });
 
-function toggle_panel_visibility ($lateral_panel, $background_layer) {
+function toggle_panel_visibility ($lateral_panel, $background_layer, $body) {
 	if( $lateral_panel.hasClass('speed-in') ) {
-		// $trigger.removeClass('is-clicked');
 		$lateral_panel.removeClass('speed-in');
 		$background_layer.removeClass('is-visible');
+		$body.removeClass('overflow-hidden');
 	} else {
-		// $trigger.addClass('is-clicked');
 		$lateral_panel.addClass('speed-in');
 		$background_layer.addClass('is-visible');
+		$body.addClass('overflow-hidden');
 	}
 }
 
