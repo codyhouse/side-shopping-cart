@@ -27,8 +27,11 @@ jQuery(document).ready(function($){
 	$shadow_layer.on('click', function(){
 		$lateral_cart.removeClass('speed-in');
 		$menu_navigation.removeClass('speed-in');
-		$shadow_layer.removeClass('is-visible');
-		$('body').removeClass('overflow-hidden');
+		
+		// firefox transitions break when parent overflow is changed, so we need to wait for the end of the trasition to give the body an overflow hidden
+		$shadow_layer.removeClass('is-visible').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
+			$('body').removeClass('overflow-hidden');
+		});
 	});
 
 	//move #main-navigation inside header on laptop
@@ -48,13 +51,17 @@ jQuery(document).ready(function($){
 
 function toggle_panel_visibility ($lateral_panel, $background_layer, $body) {
 	if( $lateral_panel.hasClass('speed-in') ) {
-		$lateral_panel.removeClass('speed-in');
+		// firefox transitions break when parent overflow is changed, so we need to wait for the end of the trasition to give the body an overflow hidden
+		$lateral_panel.removeClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+			$body.removeClass('overflow-hidden');
+		});
 		$background_layer.removeClass('is-visible');
-		$body.removeClass('overflow-hidden');
+
 	} else {
-		$lateral_panel.addClass('speed-in');
+		$lateral_panel.addClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+			$body.addClass('overflow-hidden');
+		});
 		$background_layer.addClass('is-visible');
-		$body.addClass('overflow-hidden');
 	}
 }
 
