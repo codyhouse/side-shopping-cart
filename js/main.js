@@ -25,13 +25,19 @@ jQuery(document).ready(function($){
 
 	//close lateral cart or lateral menu
 	$shadow_layer.on('click', function(){
-		$lateral_cart.removeClass('speed-in');
-		$menu_navigation.removeClass('speed-in');
-		
+		$shadow_layer.removeClass('is-visible');
 		// firefox transitions break when parent overflow is changed, so we need to wait for the end of the trasition to give the body an overflow hidden
-		$shadow_layer.removeClass('is-visible').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
-			$('body').removeClass('overflow-hidden');
-		});
+		if( $lateral_cart.hasClass('speed-in') ) {
+			$lateral_cart.removeClass('speed-in').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+				$('body').removeClass('overflow-hidden');
+			});
+			$menu_navigation.removeClass('speed-in');
+		} else {
+			$menu_navigation.removeClass('speed-in').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+				$('body').removeClass('overflow-hidden');
+			});
+			$lateral_cart.removeClass('speed-in');
+		}
 	});
 
 	//move #main-navigation inside header on laptop
